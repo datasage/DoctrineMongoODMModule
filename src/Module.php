@@ -38,10 +38,6 @@ final class Module implements InitProviderInterface, ConfigProviderInterface, Se
         }
 
         $events = $manager->getEventManager();
-        // Initialize logger collector once the profiler is initialized itself
-        $events->attach('profiler_init', static function (EventInterface $e) use ($manager): void {
-            $manager->getEvent()->getParam('ServiceManager')->get('doctrine.mongo_logger_collector.odm_default');
-        });
         $events->getSharedManager()?->attach('doctrine', 'loadCli.post', [$this, 'loadCli']);
     }
 
@@ -121,8 +117,6 @@ final class Module implements InitProviderInterface, ConfigProviderInterface, Se
                     => new ODMService\DocumentManagerFactory('odm_default'),
                 'doctrine.eventmanager.odm_default'
                     => new CommonService\EventManagerFactory('odm_default'),
-                'doctrine.mongo_logger_collector.odm_default'
-                    => new ODMService\MongoLoggerCollectorFactory('odm_default'),
             ],
         ];
     }

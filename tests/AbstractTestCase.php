@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace DoctrineMongoODMModuleTest;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Laminas\Mvc\Application;
 use MongoDB\Driver\Exception\RuntimeException;
 use MongoDB\Driver\WriteConcern;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractTestCase extends TestCase
 {
-    protected mixed $application;
-
     protected mixed $serviceManager;
 
     protected function setUp(): void
     {
-        $this->application    = Application::init(ServiceManagerFactory::getConfiguration());
-        $this->serviceManager = $this->application->getServiceManager();
+        $this->serviceManager = ServiceManagerFactory::getServiceManager();
     }
 
     public function getDocumentManager(): DocumentManager

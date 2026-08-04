@@ -72,10 +72,6 @@ return [
             ],
         ],
 
-        'mongo_logger_collector' => [
-            'odm_default' => [],
-        ],
-
         'authentication' => [
             'odm_default' => [
                 'objectManager' => 'doctrine.documentmanager.odm_default',
@@ -89,24 +85,6 @@ return [
     'hydrators' => [
         'factories' => [
             'Doctrine\Laminas\Hydrator\DoctrineObject' => DoctrineObjectHydratorFactory::class,
-        ],
-    ],
-
-    // laminas/laminas-developer-tools specific settings
-
-    'view_manager' => [
-        'template_map' => [
-            'laminas-developer-tools/toolbar/doctrine-odm'
-                => __DIR__ . '/../view/laminas-developer-tools/toolbar/doctrine-odm.phtml',
-        ],
-    ],
-
-    'laminas-developer-tools' => [
-        'profiler' => [
-            'collectors' => ['odm_default' => 'doctrine.mongo_logger_collector.odm_default'],
-        ],
-        'toolbar' => [
-            'entries' => ['odm_default' => 'laminas-developer-tools/toolbar/doctrine-odm'],
         ],
     ],
 ];

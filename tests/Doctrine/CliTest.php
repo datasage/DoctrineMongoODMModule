@@ -48,11 +48,7 @@ class CliTest extends TestCase
         $sharedEventManager = $serviceManager->get('SharedEventManager');
         assert($sharedEventManager instanceof SharedEventManagerInterface);
 
-        $application = $serviceManager->get('Application');
-        assert($application instanceof \Laminas\Mvc\Application);
         $invocations = 0;
-
-        $sharedEventManager = $application->getEventManager()->getSharedManager();
 
         $sharedEventManager->attach(
             'doctrine',
@@ -62,7 +58,6 @@ class CliTest extends TestCase
             },
         );
 
-        $application->bootstrap();
         $this->documentManager = $serviceManager->get('doctrine.documentmanager.odm_default');
         $this->cli             = $serviceManager->get('doctrine.cli');
 
