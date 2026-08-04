@@ -6,13 +6,13 @@ namespace DoctrineMongoODMModuleTest\Assets\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-/** @ODM\Document */
+#[ODM\Document]
 class Simple
 {
-    /** @ODM\Id(strategy="UUID") */
+    #[ODM\Id(strategy: 'UUID')]
     protected mixed $id;
 
-    /** @ODM\Field(type="string") */
+    #[ODM\Field(type: 'string')]
     protected mixed $name;
 
     public function getId(): mixed
