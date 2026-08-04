@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineMongoODMModuleTest\Doctrine;
 
-use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\ODM\MongoDB\APM\CommandLoggerInterface;
 use Doctrine\ODM\MongoDB\Configuration as Config;
 use Doctrine\ODM\MongoDB\PersistentCollection\PersistentCollectionFactory;
@@ -19,6 +17,7 @@ use DoctrineMongoODMModuleTest\Assets\CustomDocumentRepository;
 use DoctrineMongoODMModuleTest\Assets\CustomRepositoryFactory;
 use DoctrineMongoODMModuleTest\Assets\CustomType;
 use Laminas\ServiceManager\ServiceManager;
+use Psr\Cache\CacheItemPoolInterface;
 
 final class ConfigurationFactoryTest extends AbstractTestCase
 {
@@ -32,7 +31,7 @@ final class ConfigurationFactoryTest extends AbstractTestCase
 
         $serviceLocator->setService(
             'doctrine.cache.stubbed_metadatacache',
-            $metadataCache = $this->getMockForAbstractClass(Cache::class),
+            $metadataCache = $this->getMockForAbstractClass(CacheItemPoolInterface::class),
         );
 
         $serviceLocator->setService(
@@ -97,7 +96,8 @@ final class ConfigurationFactoryTest extends AbstractTestCase
 
         $this->assertInstanceOf(Config::class, $config);
 
-        $this->assertEquals(CacheAdapter::wrap($metadataCache), $config->getMetadataCache());
+        // The pool is handed to the configuration as-is now, not wrapped.
+        $this->assertSame($metadataCache, $config->getMetadataCache());
         $this->assertSame($mappingDriver, $config->getMetadataDriverImpl());
 
         $this->assertSame(Config::AUTOGENERATE_EVAL, $config->getAutoGenerateProxyClasses());

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineMongoODMModule\Service;
 
-use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\Types\Type;
 use DoctrineMongoODMModule\Options;
@@ -69,8 +68,9 @@ final class ConfigurationFactory extends AbstractFactory
         }
 
         // caching
-        $cache = $container->get($configurationOptions->getMetadataCache());
-        $config->setMetadataCache(CacheAdapter::wrap($cache));
+        // DoctrineModule 6.4 exposes doctrine.cache.* as PSR-6 pools already,
+        // so there is nothing to wrap.
+        $config->setMetadataCache($container->get($configurationOptions->getMetadataCache()));
 
         // Register filters
         foreach ($configurationOptions->getFilters() as $alias => $class) {
