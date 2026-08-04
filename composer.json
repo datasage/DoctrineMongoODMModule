@@ -11,26 +11,23 @@
     ],
     "homepage": "https://www.doctrine-project.org/",
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
         "ext-mongodb": "*",
-        "doctrine/cache": "^2.0.0",
         "doctrine/doctrine-laminas-hydrator": "^3.3.0",
-        "doctrine/doctrine-module": "^6.2.0",
+        "doctrine/doctrine-module": "^6.4.1",
         "doctrine/event-manager": "^2.0.0",
         "doctrine/mongodb-odm": "^2.5.2",
         "laminas/laminas-eventmanager": "^3.10.0",
         "laminas/laminas-modulemanager": "^2.14.0",
-        "laminas/laminas-mvc": "^3.6.1",
-        "laminas/laminas-servicemanager": "^3.19.0",
+        "laminas/laminas-servicemanager": "^3.19.0 || ^4.0.0",
         "laminas/laminas-stdlib": "^3.16.1",
-        "symfony/console": "^6.3.2 || ^7.0.0",
-        "symfony/var-dumper": "^6.3.2 || ^7.0.0"
+        "symfony/console": "^6.3.2 || ^7.0.0 || ^8.0.0",
+        "symfony/var-dumper": "^6.3.2 || ^7.0.0 || ^8.0.0"
     },
     "require-dev": {
         "doctrine/coding-standard": "^12.0.0",
-        "doctrine/persistence": "^3.4.0",
+        "doctrine/persistence": "^3.4.0 || ^4.0.0",
         "jangregor/phpstan-prophecy": "^2.0.0",
-        "laminas/laminas-developer-tools": "^2.9.0",
         "laminas/laminas-hydrator": "^4.16.0",
         "laminas/laminas-session": "^2.22.1",
         "phpspec/prophecy-phpunit": "^2.3.0",
@@ -38,9 +35,14 @@
         "phpunit/phpunit": "^10.5.40"
     },
     "suggest": {
-        "laminas/laminas-developer-tools": "laminas-developer-tools if you want to profile operations executed by the ODM during development",
         "laminas/laminas-form": "if you want to use form elements backed by Doctrine"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/datasage/DoctrineModule.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "DoctrineMongoODMModule\\": "src/"
@@ -57,7 +59,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "platform": {
-            "ext-mongodb": "1.11.0"
+            "ext-mongodb": "2.1.1"
         },
         "sort-packages": true
     },

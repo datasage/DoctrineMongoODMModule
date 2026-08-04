@@ -2,15 +2,19 @@
 <ruleset name="Doctrine coding standard">
     <description>Doctrine coding standard</description>
 
-    <!-- display progress -->
-    <arg value="p"/>
+    <!--
+        Run quietly. The reusable coding-standards workflow pipes the checkstyle
+        report into cs2pr, and progress output plus doctrine/coding-standard's
+        deprecated sniff banner would otherwise corrupt the XML.
+    -->
+    <arg value="q"/>
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="80"/>
     <arg name="cache" value=".phpcs.cache"/>
     <arg name="colors"/>
 
-    <!-- set minimal required PHP version (8.1) -->
-    <config name="php_version" value="80100"/>
+    <!-- set minimal required PHP version (8.2) -->
+    <config name="php_version" value="80200"/>
 
     <!-- Include full Doctrine Coding Standard -->
     <rule ref="Doctrine">
