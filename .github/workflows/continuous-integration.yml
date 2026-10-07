@@ -79,12 +79,13 @@ jobs:
         run: |
           echo "COMPOSER_ROOT_VERSION=5.4.x-dev" >> $GITHUB_ENV
 
-      # mongodb/mongodb < 2.4.2 is advisory-blocked, and ODM before 2.11.3 does
-      # not recognise the error it raises for search-index commands on servers
-      # without search support, so odm:schema:drop fails on the lowest install.
+      # mongodb/mongodb < 2.4.2 is advisory-blocked, and 2.4 throws
+      # SearchNotSupportedException on servers without search support, which
+      # ODM only catches from 2.17.0 - so odm:schema:drop fails on the lowest
+      # install.
       - name: "Raise the lowest doctrine/mongodb-odm"
         if: "${{ matrix.dependencies == 'lowest' }}"
-        run: "composer require doctrine/mongodb-odm '^2.11.3' --no-update"
+        run: "composer require doctrine/mongodb-odm '^2.17.0' --no-update"
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v3"
