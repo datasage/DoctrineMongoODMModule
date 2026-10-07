@@ -11,7 +11,7 @@
     ],
     "homepage": "https://www.doctrine-project.org/",
     "require": {
-        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0",
         "ext-mongodb": "*",
         "doctrine/doctrine-laminas-hydrator": "^3.3.0",
         "doctrine/doctrine-module": "^6.4.1",
@@ -59,7 +59,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "platform": {
-            "ext-mongodb": "2.1.1"
+            "ext-mongodb": "2.4.0"
         },
         "sort-packages": true
     },
