@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 return [
     'modules' => [
-        'Laminas\Form',
         'Laminas\Hydrator',
         'Laminas\Paginator',
         'Laminas\Validator',

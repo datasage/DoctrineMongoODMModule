@@ -11,6 +11,8 @@ use Psr\Container\ContainerInterface;
 
 use function assert;
 
+use const PHP_VERSION_ID;
+
 /**
  * Factory to create MongoDB configuration object.
  */
@@ -38,6 +40,14 @@ final class ConfigurationFactory extends AbstractFactory
         $config->setAutoGenerateProxyClasses($configurationOptions->getGenerateProxies());
         $config->setProxyDir($configurationOptions->getProxyDir());
         $config->setProxyNamespace($configurationOptions->getProxyNamespace());
+
+        // ODM 2.14+ deprecates its ProxyManager and LazyGhostTrait proxies in
+        // favour of PHP's native lazy objects, the only kind ODM 3.0 supports,
+        // and Symfony 8 removed LazyGhostTrait. Native lazy objects need PHP 8.4;
+        // with them on, no proxy classes are generated or loaded.
+        if (PHP_VERSION_ID >= 80400) {
+            $config->setUseNativeLazyObject(true);
+        }
 
         // hydrators
         $config->setAutoGenerateHydratorClasses($configurationOptions->getGenerateHydrators());

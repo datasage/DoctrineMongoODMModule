@@ -17,6 +17,7 @@ use DoctrineMongoODMModuleTest\Assets\CustomDocumentRepository;
 use DoctrineMongoODMModuleTest\Assets\CustomRepositoryFactory;
 use DoctrineMongoODMModuleTest\Assets\CustomType;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use Psr\Cache\CacheItemPoolInterface;
 
 final class ConfigurationFactoryTest extends AbstractTestCase
@@ -118,5 +119,36 @@ final class ConfigurationFactoryTest extends AbstractTestCase
         $this->assertSame(CustomClassMetadataFactory::class, $config->getClassMetadataFactoryName());
         $this->assertSame($repositoryFactory, $config->getRepositoryFactory());
         $this->assertSame(CustomDocumentRepository::class, $config->getDefaultDocumentRepositoryClassName());
+    }
+
+    #[RequiresPhp('>= 8.4')]
+    public function testNativeLazyObjectsAreEnabled(): void
+    {
+        $serviceLocator = new ServiceManager();
+        $serviceLocator->setService(
+            'doctrine.cache.stubbed_metadatacache',
+            $this->getMockForAbstractClass(CacheItemPoolInterface::class),
+        );
+        $serviceLocator->setService(
+            'doctrine.driver.stubbed_driver',
+            $this->getMockForAbstractClass(MappingDriver::class),
+        );
+        $serviceLocator->setService(
+            'config',
+            [
+                'doctrine' => [
+                    'configuration' => [
+                        'odm_test' => [
+                            'metadata_cache' => 'stubbed_metadatacache',
+                            'driver'         => 'stubbed_driver',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $config = (new ConfigurationFactory('odm_test'))($serviceLocator, Config::class);
+
+        $this->assertTrue($config->isNativeLazyObjectEnabled());
     }
 }
